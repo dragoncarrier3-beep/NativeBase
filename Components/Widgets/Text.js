@@ -2,17 +2,18 @@
 'use strict';
 
 import React, {Text } from 'react-native';
-import NativeStarterComponent from '../Base/NativeStarterComponent';
+import NativeBaseComponent from '../Base/NativeBaseComponent';
 import _ from 'lodash';
 import computeProps from '../../Utils/computeProps';
 
 
-export default class TextNSP extends NativeStarterComponent {
+export default class TextNSP extends NativeBaseComponent {
 
 	prepareRootProps() {
 
 	    var type = { 
-	    	color: this.getTheme().textColor
+	    	color: this.getTheme().textColor,
+	    	fontSize: this.getTheme().fontSizeBase
 	    }
 	  
 	    var defaultProps = {
