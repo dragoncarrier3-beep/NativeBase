@@ -11,8 +11,8 @@ export default class IconNB extends NativeBaseComponent {
     getInitialStyle() {
         return {
             icon: {
-                fontSize: 27,
-                color: 'white'
+                fontSize: 34,
+                color: this.getContextForegroundColor()
             }
         }
     }
@@ -24,8 +24,8 @@ export default class IconNB extends NativeBaseComponent {
         return computeProps(this.props, defaultProps);
 
     }
-    
-    render() { 
+
+    render() {
         return(
             <Icon {...this.prepareRootProps()}/>
         );
