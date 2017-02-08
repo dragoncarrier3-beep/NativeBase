@@ -4,8 +4,12 @@ import { Platform, Dimensions, PixelRatio } from 'react-native';
 
 const deviceHeight = Dimensions.get('window').height;
 const deviceWidth = Dimensions.get('window').width;
-export default {
+const platform = Platform.OS;
+const platformStyle = undefined;
 
+export default {
+  platformStyle,
+  platform,
     // AndroidRipple
   androidRipple: true,
   androidRippleColor: 'rgba(256, 256, 256, 0.3)',
@@ -15,21 +19,21 @@ export default {
   badgeBg: '#ED1727',
   badgeColor: '#fff',
     // New Variable
-  badgePadding: (Platform.OS === 'ios') ? 3 : 0,
+  badgePadding: (platform === 'ios') ? 3 : 0,
 
     // Button
-  btnFontFamily: (Platform.OS === 'ios') ? 'System' : 'Roboto_medium',
+  btnFontFamily: (platform === 'ios') ? 'System' : 'Roboto_medium',
   btnDisabledBg: '#b5b5b5',
   btnDisabledClr: '#f1f1f1',
 
     // CheckBox
-  CheckboxRadius: (Platform.OS === 'ios') ? 13 : 0,
-  CheckboxBorderWidth: (Platform.Os === 'ios') ? 1 : 2,
-  CheckboxPaddingLeft: (Platform.OS === 'ios') ? 4 : 2,
-  CheckboxPaddingBottom: (Platform.OS === 'ios') ? 0 : 5,
-  CheckboxIconSize: (Platform.OS === 'ios') ? 21 : 14,
-  CheckboxIconMarginTop: (Platform.OS === 'ios') ? undefined : 1,
-  CheckboxFontSize: (Platform.OS === 'ios') ? (23 / 0.9) : 18,
+  CheckboxRadius: (platform === 'ios') ? 13 : 0,
+  CheckboxBorderWidth: (platform === 'ios') ? 1 : 2,
+  CheckboxPaddingLeft: (platform === 'ios') ? 4 : 2,
+  CheckboxPaddingBottom: (platform === 'ios') ? 0 : 5,
+  CheckboxIconSize: (platform === 'ios') ? 21 : 14,
+  CheckboxIconMarginTop: (platform === 'ios') ? undefined : 1,
+  CheckboxFontSize: (platform === 'ios') ? (23 / 0.9) : 18,
   DefaultFontSize: 17,
   checkboxBgColor: '#039BE5',
   checkboxSize: 20,
@@ -72,7 +76,7 @@ export default {
     return this.inverseTextColor;
   },
   get btnTextSize() {
-    return (Platform.OS === 'ios') ? this.fontSizeBase * 1.1 :
+    return (platform === 'ios') ? this.fontSizeBase * 1.1 :
         this.fontSizeBase - 1;
   },
   get btnTextSizeLarge() {
@@ -100,7 +104,7 @@ export default {
 
 
       // Color
-  brandPrimary: (Platform.OS === 'ios') ? '#007aff' : '#3F51B5',
+  brandPrimary: (platform === 'ios') ? '#007aff' : '#3F51B5',
   brandInfo: '#62B1F6',
   brandSuccess: '#5cb85c',
   brandDanger: '#d9534f',
@@ -109,7 +113,7 @@ export default {
 
 
     // Font
-  fontFamily: (Platform.OS === 'ios') ? 'System' : 'Roboto',
+  fontFamily: (platform === 'ios') ? 'System' : 'Roboto',
   fontSizeBase: 15,
 
   get fontSizeH1() {
@@ -125,44 +129,46 @@ export default {
 
     // Footer
   footerHeight: 55,
-  footerDefaultBg: (Platform.OS === 'ios') ? '#F8F8F8' : '#4179F7',
+  footerDefaultBg: (platform === 'ios') ? '#F8F8F8' : '#4179F7',
 
 
     // FooterTab
-  tabBarTextColor: (Platform.OS === 'ios') ? '#6b6b6b' : '#b3c7f9',
-  tabBarTextSize: (Platform.OS === 'ios') ? 14 : 11,
-  activeTab: (Platform.OS === 'ios') ? '#007aff' : '#fff',
+  tabBarTextColor: (platform === 'ios') ? '#6b6b6b' : '#b3c7f9',
+  tabBarTextSize: (platform === 'ios') ? 14 : 11,
+  activeTab: (platform === 'ios') ? '#007aff' : '#fff',
   sTabBarActiveTextColor: '#007aff',
-  tabBarActiveTextColor: (Platform.OS === 'ios') ? '#007aff' : '#fff',
-  tabActiveBgColor: (Platform.OS === 'ios') ? '#cde1f9' : undefined,
+  tabBarActiveTextColor: (platform === 'ios') ? '#007aff' : '#fff',
+  tabActiveBgColor: (platform === 'ios') ? '#cde1f9' : undefined,
 
     // Tab
-  tabDefaultBg: (Platform.OS === 'ios') ? '#F8F8F8' : '#4179F7',
-  topTabBarTextColor: (Platform.OS === 'ios') ? '#6b6b6b' : '#b3c7f9',
-  topTabBarActiveTextColor: (Platform.OS === 'ios') ? '#007aff' : '#fff',
-  topTabActiveBgColor: (Platform.OS === 'ios') ? '#cde1f9' : undefined,
-  topTabBarBorderColor: (Platform.OS === 'ios') ? '#007aff' : '#fff',
+  tabDefaultBg: (platform === 'ios') ? '#F8F8F8' : '#4179F7',
+  topTabBarTextColor: (platform === 'ios') ? '#6b6b6b' : '#b3c7f9',
+  topTabBarActiveTextColor: (platform === 'ios') ? '#007aff' : '#fff',
+  topTabActiveBgColor: (platform === 'ios') ? '#cde1f9' : undefined,
+  topTabBarBorderColor: (platform === 'ios') ? '#007aff' : '#fff',
 
 
     // Header
-  iosToolbarBtnColor: (Platform.OS === 'ios') ? '#007aff' : '#fff',
-  toolbarDefaultBg: (Platform.OS === 'ios') ? '#F8F8F8' : '#3F51B5',
-  toolbarHeight: (Platform.OS === 'ios') ? 64 : 56,
-  toolbarIconSize: (Platform.OS === 'ios') ? 20 : 22,
-  toolbarInputColor: '#CECDD2',
+  toolbarBtnColor: (platform === 'ios') ? '#007aff' : '#fff',
+  toolbarDefaultBg: (platform === 'ios') ? '#F8F8F8' : '#3F51B5',
+  toolbarHeight: (platform === 'ios') ? 64 : 56,
+  toolbarIconSize: (platform === 'ios') ? 20 : 22,
+  toolbarSearchIconSize: (platform === 'ios') ? 20 : 23,
+  toolbarInputColor: (platform === 'ios') ? '#CECDD2' : '#fff',
+  searchBarHeight: (platform === 'ios') ? 30 : 40,
   toolbarInverseBg: '#222',
-  toolbarTextColor: (Platform.OS === 'ios') ? '#000' : '#fff',
-  toolbarDefaultBorder: '#ccc',
+  toolbarTextColor: (platform === 'ios') ? '#000' : '#fff',
+  toolbarDefaultBorder: (platform === 'ios') ? '#a7a6ab' : '#3F51B5',
   get statusBarColor() {
     return color(this.toolbarDefaultBg).darken(0.2).hexString();
   },
 
 
     // Icon
-  iconFamily: 'MaterialIcons',
-  iconFontSize: (Platform.OS === 'ios') ? 30 : 28,
+  iconFamily: 'Ionicons',
+  iconFontSize: (platform === 'ios') ? 30 : 28,
   iconMargin: 7,
-  iconHeaderSize: (Platform.OS === 'ios') ? 33 : 28,
+  iconHeaderSize: (platform === 'ios') ? 33 : 28,
 
 
     // InputGroup
@@ -192,8 +198,8 @@ export default {
   lineHeightH1: 32,
   lineHeightH2: 27,
   lineHeightH3: 22,
-  iconLineHeight: (Platform.OS === 'ios') ? 37 : 30,
-  lineHeight: (Platform.OS === 'ios') ? 20 : 24,
+  iconLineHeight: (platform === 'ios') ? 37 : 30,
+  lineHeight: (platform === 'ios') ? 20 : 24,
 
 
     // List
@@ -205,7 +211,7 @@ export default {
   cardBorderColor: '#ccc',
 
     // Changed Variable
-  listItemPadding: (Platform.OS === 'ios') ? 10 : 12,
+  listItemPadding: (platform === 'ios') ? 10 : 12,
 
   listNoteColor: '#808080',
   listNoteSize: 13,
@@ -217,11 +223,11 @@ export default {
 
 
     // Radio Button
-  radioBtnSize: (Platform.OS === 'ios') ? 25 : 23,
+  radioBtnSize: (platform === 'ios') ? 25 : 23,
   radioSelectedColorAndroid: '#5067FF',
 
     // New Variable
-  radioBtnLineHeight: (Platform.OS === 'ios') ? 29 : 24,
+  radioBtnLineHeight: (platform === 'ios') ? 29 : 24,
 
   radioColor: '#7e7e7e',
 
@@ -248,17 +254,17 @@ export default {
 
 
     // Title
-  titleFontfamily: (Platform.OS === 'ios') ? 'System' : 'Roboto_medium',
-  titleFontSize: (Platform.OS === 'ios') ? 17 : 19,
-  subTitleFontSize: (Platform.OS === 'ios') ? 12 : 14,
-  subtitleColor: (Platform.OS === 'ios') ? '#8e8e93' : '#FFF',
+  titleFontfamily: (platform === 'ios') ? 'System' : 'Roboto_medium',
+  titleFontSize: (platform === 'ios') ? 17 : 19,
+  subTitleFontSize: (platform === 'ios') ? 12 : 14,
+  subtitleColor: (platform === 'ios') ? '#8e8e93' : '#FFF',
 
     // New Variable
-  titleFontColor: (Platform.OS === 'ios') ? '#000' : '#FFF',
+  titleFontColor: (platform === 'ios') ? '#000' : '#FFF',
 
 
     // Other
-  borderRadiusBase: (Platform.OS === 'ios') ? 5 : 2,
+  borderRadiusBase: (platform === 'ios') ? 5 : 2,
   borderWidth: (1/PixelRatio.getPixelSizeForLayoutSize(1)),
   contentPadding: 10,
 

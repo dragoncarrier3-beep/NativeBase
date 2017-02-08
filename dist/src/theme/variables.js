@@ -3,9 +3,13 @@ Object.defineProperty(exports,"__esModule",{value:true});var _color=require('col
 var _reactNative=require('react-native');function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}
 
 var deviceHeight=_reactNative.Dimensions.get('window').height;
-var deviceWidth=_reactNative.Dimensions.get('window').width;exports.default=
-{
+var deviceWidth=_reactNative.Dimensions.get('window').width;
+var platform=_reactNative.Platform.OS;
+var platformStyle=undefined;exports.default=
 
+{
+platformStyle:platformStyle,
+platform:platform,
 
 androidRipple:true,
 androidRippleColor:'rgba(256, 256, 256, 0.3)',
@@ -15,21 +19,21 @@ androidRippleColorDark:'rgba(0, 0, 0, 0.15)',
 badgeBg:'#ED1727',
 badgeColor:'#fff',
 
-badgePadding:_reactNative.Platform.OS==='ios'?3:0,
+badgePadding:platform==='ios'?3:0,
 
 
-btnFontFamily:_reactNative.Platform.OS==='ios'?'System':'Roboto_medium',
+btnFontFamily:platform==='ios'?'System':'Roboto_medium',
 btnDisabledBg:'#b5b5b5',
 btnDisabledClr:'#f1f1f1',
 
 
-CheckboxRadius:_reactNative.Platform.OS==='ios'?13:0,
-CheckboxBorderWidth:_reactNative.Platform.Os==='ios'?1:2,
-CheckboxPaddingLeft:_reactNative.Platform.OS==='ios'?4:2,
-CheckboxPaddingBottom:_reactNative.Platform.OS==='ios'?0:5,
-CheckboxIconSize:_reactNative.Platform.OS==='ios'?21:14,
-CheckboxIconMarginTop:_reactNative.Platform.OS==='ios'?undefined:1,
-CheckboxFontSize:_reactNative.Platform.OS==='ios'?23/0.9:18,
+CheckboxRadius:platform==='ios'?13:0,
+CheckboxBorderWidth:platform==='ios'?1:2,
+CheckboxPaddingLeft:platform==='ios'?4:2,
+CheckboxPaddingBottom:platform==='ios'?0:5,
+CheckboxIconSize:platform==='ios'?21:14,
+CheckboxIconMarginTop:platform==='ios'?undefined:1,
+CheckboxFontSize:platform==='ios'?23/0.9:18,
 DefaultFontSize:17,
 checkboxBgColor:'#039BE5',
 checkboxSize:20,
@@ -72,7 +76,7 @@ get btnWarningColor(){
 return this.inverseTextColor;
 },
 get btnTextSize(){
-return _reactNative.Platform.OS==='ios'?this.fontSizeBase*1.1:
+return platform==='ios'?this.fontSizeBase*1.1:
 this.fontSizeBase-1;
 },
 get btnTextSizeLarge(){
@@ -100,7 +104,7 @@ cardDefaultBg:'#fff',
 
 
 
-brandPrimary:_reactNative.Platform.OS==='ios'?'#007aff':'#3F51B5',
+brandPrimary:platform==='ios'?'#007aff':'#3F51B5',
 brandInfo:'#62B1F6',
 brandSuccess:'#5cb85c',
 brandDanger:'#d9534f',
@@ -109,7 +113,7 @@ brandSidebar:'#252932',
 
 
 
-fontFamily:_reactNative.Platform.OS==='ios'?'System':'Roboto',
+fontFamily:platform==='ios'?'System':'Roboto',
 fontSizeBase:15,
 
 get fontSizeH1(){
@@ -125,44 +129,46 @@ return this.fontSizeBase*1.4;
 
 
 footerHeight:55,
-footerDefaultBg:_reactNative.Platform.OS==='ios'?'#F8F8F8':'#4179F7',
+footerDefaultBg:platform==='ios'?'#F8F8F8':'#4179F7',
 
 
 
-tabBarTextColor:_reactNative.Platform.OS==='ios'?'#6b6b6b':'#b3c7f9',
-tabBarTextSize:_reactNative.Platform.OS==='ios'?14:11,
-activeTab:_reactNative.Platform.OS==='ios'?'#007aff':'#fff',
+tabBarTextColor:platform==='ios'?'#6b6b6b':'#b3c7f9',
+tabBarTextSize:platform==='ios'?14:11,
+activeTab:platform==='ios'?'#007aff':'#fff',
 sTabBarActiveTextColor:'#007aff',
-tabBarActiveTextColor:_reactNative.Platform.OS==='ios'?'#007aff':'#fff',
-tabActiveBgColor:_reactNative.Platform.OS==='ios'?'#cde1f9':undefined,
+tabBarActiveTextColor:platform==='ios'?'#007aff':'#fff',
+tabActiveBgColor:platform==='ios'?'#cde1f9':undefined,
 
 
-tabDefaultBg:_reactNative.Platform.OS==='ios'?'#F8F8F8':'#4179F7',
-topTabBarTextColor:_reactNative.Platform.OS==='ios'?'#6b6b6b':'#b3c7f9',
-topTabBarActiveTextColor:_reactNative.Platform.OS==='ios'?'#007aff':'#fff',
-topTabActiveBgColor:_reactNative.Platform.OS==='ios'?'#cde1f9':undefined,
-topTabBarBorderColor:_reactNative.Platform.OS==='ios'?'#007aff':'#fff',
+tabDefaultBg:platform==='ios'?'#F8F8F8':'#4179F7',
+topTabBarTextColor:platform==='ios'?'#6b6b6b':'#b3c7f9',
+topTabBarActiveTextColor:platform==='ios'?'#007aff':'#fff',
+topTabActiveBgColor:platform==='ios'?'#cde1f9':undefined,
+topTabBarBorderColor:platform==='ios'?'#007aff':'#fff',
 
 
 
-iosToolbarBtnColor:_reactNative.Platform.OS==='ios'?'#007aff':'#fff',
-toolbarDefaultBg:_reactNative.Platform.OS==='ios'?'#F8F8F8':'#3F51B5',
-toolbarHeight:_reactNative.Platform.OS==='ios'?64:56,
-toolbarIconSize:_reactNative.Platform.OS==='ios'?20:22,
-toolbarInputColor:'#CECDD2',
+toolbarBtnColor:platform==='ios'?'#007aff':'#fff',
+toolbarDefaultBg:platform==='ios'?'#F8F8F8':'#3F51B5',
+toolbarHeight:platform==='ios'?64:56,
+toolbarIconSize:platform==='ios'?20:22,
+toolbarSearchIconSize:platform==='ios'?20:23,
+toolbarInputColor:platform==='ios'?'#CECDD2':'#fff',
+searchBarHeight:platform==='ios'?30:40,
 toolbarInverseBg:'#222',
-toolbarTextColor:_reactNative.Platform.OS==='ios'?'#000':'#fff',
-toolbarDefaultBorder:'#ccc',
+toolbarTextColor:platform==='ios'?'#000':'#fff',
+toolbarDefaultBorder:platform==='ios'?'#a7a6ab':'#3F51B5',
 get statusBarColor(){
 return(0,_color2.default)(this.toolbarDefaultBg).darken(0.2).hexString();
 },
 
 
 
-iconFamily:'MaterialIcons',
-iconFontSize:_reactNative.Platform.OS==='ios'?30:28,
+iconFamily:'Ionicons',
+iconFontSize:platform==='ios'?30:28,
 iconMargin:7,
-iconHeaderSize:_reactNative.Platform.OS==='ios'?33:28,
+iconHeaderSize:platform==='ios'?33:28,
 
 
 
@@ -192,8 +198,8 @@ btnLineHeight:19,
 lineHeightH1:32,
 lineHeightH2:27,
 lineHeightH3:22,
-iconLineHeight:_reactNative.Platform.OS==='ios'?37:30,
-lineHeight:_reactNative.Platform.OS==='ios'?20:24,
+iconLineHeight:platform==='ios'?37:30,
+lineHeight:platform==='ios'?20:24,
 
 
 
@@ -205,7 +211,7 @@ listItemHeight:45,
 cardBorderColor:'#ccc',
 
 
-listItemPadding:_reactNative.Platform.OS==='ios'?10:12,
+listItemPadding:platform==='ios'?10:12,
 
 listNoteColor:'#808080',
 listNoteSize:13,
@@ -217,11 +223,11 @@ inverseProgressColor:'#1A191B',
 
 
 
-radioBtnSize:_reactNative.Platform.OS==='ios'?25:23,
+radioBtnSize:platform==='ios'?25:23,
 radioSelectedColorAndroid:'#5067FF',
 
 
-radioBtnLineHeight:_reactNative.Platform.OS==='ios'?29:24,
+radioBtnLineHeight:platform==='ios'?29:24,
 
 radioColor:'#7e7e7e',
 
@@ -248,17 +254,17 @@ noteFontSize:14,
 
 
 
-titleFontfamily:_reactNative.Platform.OS==='ios'?'System':'Roboto_medium',
-titleFontSize:_reactNative.Platform.OS==='ios'?17:19,
-subTitleFontSize:_reactNative.Platform.OS==='ios'?12:14,
-subtitleColor:_reactNative.Platform.OS==='ios'?'#8e8e93':'#FFF',
+titleFontfamily:platform==='ios'?'System':'Roboto_medium',
+titleFontSize:platform==='ios'?17:19,
+subTitleFontSize:platform==='ios'?12:14,
+subtitleColor:platform==='ios'?'#8e8e93':'#FFF',
 
 
-titleFontColor:_reactNative.Platform.OS==='ios'?'#000':'#FFF',
+titleFontColor:platform==='ios'?'#000':'#FFF',
 
 
 
-borderRadiusBase:_reactNative.Platform.OS==='ios'?5:2,
+borderRadiusBase:platform==='ios'?5:2,
 borderWidth:1/_reactNative.PixelRatio.getPixelSizeForLayoutSize(1),
 contentPadding:10,
 
