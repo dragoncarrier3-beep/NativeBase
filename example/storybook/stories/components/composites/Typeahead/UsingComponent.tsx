@@ -1,38 +1,39 @@
 import React from 'react';
-import { Typeahead, Box, Icon, Heading } from 'native-base';
+import { Typeahead, Icon } from 'native-base';
 
-let countries = [
-  'Afghanistan',
-  'Australia',
-  'India',
-  'USA',
-  'Germany',
-  'France',
-  'Iceland',
-  'Russia',
-  'Japan',
-  'China',
-  'Denmark',
-  'Norway',
+const animals = [
+  { id: 1, value: 'Aardvark' },
+  { id: 2, value: 'Kangaroo' },
+  { id: 3, value: 'Snake' },
+  { id: 4, value: 'Pikachu' },
+  { id: 5, value: 'Tiger' },
+  { id: 6, value: 'Godzilla' },
 ];
 
 export function UsingComponent() {
+  const [filterText, setFilterText] = React.useState('');
+
+  const filteredItems = React.useMemo(() => {
+    return animals.filter(
+      (item) => item.value.toLowerCase().indexOf(filterText.toLowerCase()) > -1
+    );
+  }, [filterText]);
+
   return (
-    <Box>
-      <Heading>Typeahead</Heading>
-      <Typeahead
-        mt={4}
-        size="2xl"
-        numberOfItems={6}
-        options={countries}
-        toggleIcon={({ isOpen }: any) => {
-          return isOpen ? (
-            <Icon name="arrow-drop-up" type="MaterialIcons" size={12} />
-          ) : (
-            <Icon name="arrow-drop-down" type="MaterialIcons" size={12} />
-          );
-        }}
-      />
-    </Box>
+    <Typeahead
+      options={filteredItems}
+      onChange={setFilterText}
+      onSelectedItemChange={console.log}
+      getOptionKey={(item) => item.key}
+      getOptionLabel={(item) => item.value}
+      label="Select your favorite animal"
+      toggleIcon={({ isOpen }: any) => {
+        return isOpen ? (
+          <Icon name="arrow-drop-up" type="MaterialIcons" size={12} />
+        ) : (
+          <Icon name="arrow-drop-down" type="MaterialIcons" size={12} />
+        );
+      }}
+    />
   );
 }
