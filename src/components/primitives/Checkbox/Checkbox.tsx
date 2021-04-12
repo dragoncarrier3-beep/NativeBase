@@ -1,9 +1,5 @@
 import React, { useContext } from 'react';
-import {
-  TouchableOpacity,
-  Platform,
-  TouchableOpacityProps,
-} from 'react-native';
+import { default as Pressable, IPressableProps } from '../Pressable';
 import { mergeRefs } from './../../../utils';
 import { useThemeProps } from '../../../hooks';
 import { Center } from '../../composites/Center';
@@ -12,20 +8,23 @@ import Box from '../Box';
 import Icon from '../Icon';
 import type { ICheckboxProps } from './types';
 import { useToggleState } from '@react-stately/toggle';
-import { VisuallyHidden } from '@react-aria/visually-hidden';
 import { CheckboxGroupContext } from './CheckboxGroup';
-import { useHover } from '@react-native-aria/interactions';
 import { useCheckbox, useCheckboxGroupItem } from '@react-native-aria/checkbox';
-import { useFocusRing } from '@react-native-aria/focus';
 
-const Checkbox = ({ icon, ...props }: ICheckboxProps, ref: any) => {
+const Checkbox = ({ icon, children, ...props }: ICheckboxProps, ref: any) => {
   const formControlContext = useFormControlContext();
 
   const checkboxGroupContext = React.useContext(CheckboxGroupContext);
   const {
-    activeColor,
-    borderColor,
-    iconColor,
+    _interactionBox: { _pressed: _iterationBoxPressed, ..._interactionBox },
+    _checkbox: {
+      _checked: _checboxChecked,
+      _disabled: _checkboxDisabled,
+      _invalid: _checkboxInvalid,
+      ..._checkbox
+    },
+    _icon,
+    isInvalid,
     size,
     ...newProps
   } = useThemeProps('Checkbox', {
@@ -33,20 +32,19 @@ const Checkbox = ({ icon, ...props }: ICheckboxProps, ref: any) => {
     ...formControlContext,
     ...props,
   });
-  let _ref = React.useRef();
+  const _ref = React.useRef();
   const mergedRef = mergeRefs([ref, _ref]);
-  let state = useToggleState({
+  const state = useToggleState({
     ...props,
     defaultSelected: props.defaultIsChecked,
     isSelected: props.isChecked,
   });
-  let groupState = useContext(CheckboxGroupContext);
-  const { isHovered } = useHover({}, _ref);
+  const groupState = useContext(CheckboxGroupContext);
 
   // Swap hooks depending on whether this checkbox is inside a CheckboxGroup.
   // This is a bit unorthodox. Typically, hooks cannot be called in a conditional,
   // but since the checkbox won't move in and out of a group, it should be safe.
-  let { inputProps } = groupState
+  const { inputProps } = groupState
     ? // eslint-disable-next-line react-hooks/rules-of-hooks
       useCheckboxGroupItem(
         {
@@ -67,90 +65,71 @@ const Checkbox = ({ icon, ...props }: ICheckboxProps, ref: any) => {
 
   const isChecked = inputProps.checked;
   const isDisabled = inputProps.disabled;
+
   const sizedIcon = icon
     ? () =>
         React.cloneElement(
           icon,
           {
             size,
-            color: icon.props.color ? icon.props.color : iconColor,
+            ..._icon,
           },
           icon.props.children
         )
     : null;
-  const outlineColor =
-    isHovered && !isDisabled
-      ? activeColor
-      : isChecked
-      ? isDisabled
-        ? borderColor
-        : activeColor
-      : borderColor;
-  const component = (
-    <Box
-      flexDirection="row"
-      alignItems="center"
-      {...newProps}
-      opacity={isDisabled ? 0.4 : 1}
-      {...(Platform.OS === 'web'
-        ? {
-            disabled: isDisabled,
-            cursor: isDisabled ? 'not-allowed' : 'pointer',
-          }
-        : {})}
+  const nativeComponent = (
+    <Pressable
+      {...(inputProps as IPressableProps)}
+      accessibilityRole="checkbox"
     >
-      <Center
-        backgroundColor={
-          isChecked ? (isDisabled ? borderColor : activeColor) : 'transparent'
-        }
-        borderColor={outlineColor}
-        borderWidth={2}
-        borderRadius="sm"
-      >
-        {icon && sizedIcon && isChecked ? (
-          sizedIcon()
-        ) : (
-          <Icon
-            name="check"
-            size={size}
-            color={iconColor}
-            opacity={isChecked ? 1 : 0}
-          />
-        )}
-      </Center>
-      {props.children}
-    </Box>
+      {({ isPressed }: any) => {
+        return (
+          <Center
+            flexDirection="row"
+            justifyContent="center "
+            alignItems="center"
+            borderRadius="full"
+            ref={_ref}
+            {...newProps}
+          >
+            <Center>
+              {/* Interaction Wrapper */}
+              <Box
+                {..._interactionBox}
+                {...(isPressed && _iterationBoxPressed)}
+                p={5}
+                w="100%"
+                height="100%"
+                zIndex={-1}
+              />
+              {/* Checkbox */}
+              <Center
+                {..._checkbox}
+                {...(isChecked && _checboxChecked)}
+                {...(isDisabled && _checkboxDisabled)}
+                {...(isInvalid && _checkboxInvalid)}
+              >
+                {icon && sizedIcon && isChecked ? (
+                  sizedIcon()
+                ) : (
+                  <Icon
+                    name="check"
+                    size={size}
+                    {..._icon}
+                    opacity={isChecked ? 1 : 0}
+                  />
+                )}
+              </Center>
+            </Center>
+            {/* Label */}
+            {children}
+          </Center>
+        );
+      }}
+    </Pressable>
   );
 
-  const { focusProps, isFocusVisible } = useFocusRing();
-
-  return (
-    <>
-      {Platform.OS === 'web' ? (
-        <Box
-          // @ts-ignore - RN web supports accessibilityRole="label"
-          accessibilityRole="label"
-          ref={_ref}
-          outlineWidth={isFocusVisible ? 1 : 0}
-          outlineColor={activeColor}
-          outlineStyle={'solid'}
-        >
-          <VisuallyHidden>
-            <input {...inputProps} {...focusProps} ref={mergedRef} />
-          </VisuallyHidden>
-
-          {component}
-        </Box>
-      ) : (
-        <TouchableOpacity
-          {...(inputProps as TouchableOpacityProps)}
-          ref={mergedRef}
-        >
-          {component}
-        </TouchableOpacity>
-      )}
-    </>
-  );
+  return nativeComponent;
 };
 
 export default React.memo(React.forwardRef(Checkbox));
