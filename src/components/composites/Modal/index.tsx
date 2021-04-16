@@ -1,19 +1,37 @@
-import ModalContent from './ModalContent';
-import ModalBody from './ModalBody';
-import ModalCloseButton from './ModalCloseButton';
-import ModalFooter from './ModalFooter';
-import ModalHeader from './ModalHeader';
-import ModalMain from './Modal';
-export type { IModalProps, IModalSemiProps } from './types';
-import type { IModalComponentType } from './types';
+import { OverlayContainer } from '@react-native-aria/overlays';
+import React from 'react';
+import { Box } from 'native-base';
+import { Backdrop } from '..';
 
-let ModalTemp: any = ModalMain;
-ModalTemp.Content = ModalContent;
-ModalTemp.CloseButton = ModalCloseButton;
-ModalTemp.Header = ModalHeader;
-ModalTemp.Footer = ModalFooter;
-ModalTemp.Body = ModalBody;
+const Modal = ({
+  children,
+  isOpen,
+  onClose,
+}: {
+  children?: any;
+  isOpen: boolean;
+  onClose?: () => void;
+}) => {
+  if (!isOpen) return null;
 
-// To add typings
-const Modal = ModalTemp as IModalComponentType;
-export { Modal };
+  return (
+    <OverlayContainer>
+      <Backdrop onClick={onClose ? onClose : () => {}} />
+      <Box
+        margin="auto"
+        top={0}
+        bottom={0}
+        left={0}
+        right={0}
+        bg="white"
+        minWidth={64}
+        minHeight={24}
+        opacity={1}
+      >
+        {children ? children : null}
+      </Box>
+    </OverlayContainer>
+  );
+};
+
+export default Modal;

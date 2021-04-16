@@ -1,47 +1,18 @@
 import React from 'react';
-import { Modal, Button, Center, ButtonGroup } from 'native-base';
+import { Box, Button, Modal } from 'native-base';
+import { useState } from 'react';
 
-export default function () {
-  const [modalVisible, setModalVisible] = React.useState(false);
+const Basic = () => {
+  const [showModal, setShowModal] = useState(true);
+
   return (
     <>
-      <Modal
-        accessibilityLabel="this is a simple modal"
-        isOpen={modalVisible}
-        onClose={setModalVisible}
-        overlayVisible={true}
-      >
-        <Modal.Content>
-          <Modal.CloseButton />
-          <Modal.Header>Cookie Policy</Modal.Header>
-          <Modal.Body>
-            We use our own and third-party cookies and other tracking
-            technologies, by continuing to browse the website, you accept our
-            use of cookies and tracking technologies.
-          </Modal.Body>
-          <Modal.Footer>
-            <ButtonGroup variant="ghost" space={2}>
-              <Button>LEARN MORE</Button>
-              <Button
-                onPress={() => {
-                  setModalVisible(!modalVisible);
-                }}
-              >
-                ACCEPT
-              </Button>
-            </ButtonGroup>
-          </Modal.Footer>
-        </Modal.Content>
+      <Button onPress={() => setShowModal(true)}>Button</Button>
+      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
+        <Box display="flex" h="100%" bg="red.200"></Box>
       </Modal>
-      <Center>
-        <Button
-          onPress={() => {
-            setModalVisible(!modalVisible);
-          }}
-        >
-          Open Modal
-        </Button>
-      </Center>
     </>
   );
-}
+};
+
+export default Basic;
