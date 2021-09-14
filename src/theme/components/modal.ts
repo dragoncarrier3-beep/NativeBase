@@ -4,13 +4,13 @@ import { mode } from '../tools';
 const sizes = {
   xs: {
     contentSize: {
-      width: '55%',
+      width: '60%',
       maxWidth: '280',
     },
   },
   sm: {
     contentSize: {
-      width: '60%',
+      width: '65%',
       maxWidth: '320',
     },
   },
@@ -68,32 +68,37 @@ export const ModalCloseButton = {
   baseStyle: (props: Record<string, any>) => {
     return {
       position: 'absolute',
-      right: 3,
-      top: 3,
-      zIndex: 1,
+      right: '3',
+      top: '3',
+      zIndex: '1',
       colorScheme: 'coolGray',
-      p: 2,
+      p: '2',
       _icon: {
-        size: 3,
-        color: mode('gray.400', 'gray.100')(props),
+        size: '3',
+        color: mode('coolGray.600', 'coolGray.100')(props),
       },
     };
   },
 };
 export const ModalHeader = {
   baseStyle: {
-    p: '3',
-    px: '4',
+    py: '4',
+    px: '3',
     borderBottomWidth: '1',
-    borderColor: 'coolGray.100',
-    _text: { fontSize: 'md', fontWeight: 'semibold', color: 'coolGray.800' },
+    borderColor: 'coolGray.200',
+    _text: {
+      fontSize: 'md',
+      fontWeight: 'semibold',
+      color: 'coolGray.800',
+      lineHeight: 'sm',
+    },
   },
 };
 export const ModalBody = {
   baseStyle: (props: Record<string, any>) => {
     return {
+      pt: '2',
       p: '3',
-      px: '4',
       _text: {
         color: mode('coolGray.600', 'coolGray.300')(props),
       },

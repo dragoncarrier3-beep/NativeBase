@@ -1,5 +1,5 @@
 import type { IBoxProps } from '../../primitives/Box';
-import type { IButtonProps } from 'native-base';
+import type { IIconButtonProps } from '../../composites/IconButton';
 import type { MutableRefObject } from 'react';
 
 export interface IModalProps extends IBoxProps {
@@ -22,11 +22,11 @@ export interface IModalProps extends IBoxProps {
   /**
    * The ref of element to receive focus when the modal opens.
    */
-  initialFocusRef: React.RefObject<any>;
+  initialFocusRef?: React.RefObject<any>;
   /**
    * The ref of element to receive focus when the modal closes.
    */
-  finalFocusRef: React.RefObject<any>;
+  finalFocusRef?: React.RefObject<any>;
   /**
    * If true and the keyboard is opened, the modal will move up equvivalent to the keyboard height.
    * @default false
@@ -65,7 +65,7 @@ export type IModalComponentType = ((
     (props: IBoxProps & { ref?: MutableRefObject<any> }) => JSX.Element
   >;
   CloseButton: React.MemoExoticComponent<
-    (props: IButtonProps & { ref?: MutableRefObject<any> }) => JSX.Element
+    (props: IIconButtonProps & { ref?: MutableRefObject<any> }) => JSX.Element
   >;
   Content: React.MemoExoticComponent<
     (props: IBoxProps & { ref?: MutableRefObject<any> }) => JSX.Element
