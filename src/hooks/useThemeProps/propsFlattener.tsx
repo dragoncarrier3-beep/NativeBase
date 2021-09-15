@@ -20,6 +20,17 @@ const specificityPrecedence = [
   SPECIFICITY_10,
   SPECIFICITY_1,
 ];
+const INITIAL_PROP_SPECIFICITY = {
+  [SPECIFICITY_100]: 0,
+  [SPECIFICITY_70]: 0,
+  [SPECIFICITY_60]: 0,
+  [SPECIFICITY_50]: 0,
+  [SPECIFICITY_55]: 0,
+  [SPECIFICITY_40]: 0,
+  [SPECIFICITY_30]: 0,
+  [SPECIFICITY_10]: 0,
+  [SPECIFICITY_1]: 0,
+};
 
 const pseudoPropsMap: any = {
   _web: { dependentOn: 'platform', priority: SPECIFICITY_10 },
@@ -40,6 +51,13 @@ const pseudoPropsMap: any = {
     respondTo: 'isChecked',
     priority: SPECIFICITY_30,
   },
+  // Add new pseudeo props in between -------
+  _readOnly: {
+    dependentOn: 'state',
+    respondTo: 'isReadOnly',
+    priority: SPECIFICITY_30,
+  },
+  // Add new pseudeo props in between -------
   _invalid: {
     dependentOn: 'state',
     respondTo: 'isInvalid',
@@ -72,9 +90,18 @@ const pseudoPropsMap: any = {
   },
 };
 
-const compareSpecificity = (exisiting: any, upcoming: any) => {
+export const compareSpecificity = (
+  exisiting: any,
+  upcoming: any,
+  ignorebaseTheme?: boolean
+  // property?: any
+) => {
   if (!exisiting) return true;
-  for (let index = 0; index < specificityPrecedence.length; index++) {
+  if (!upcoming) return false;
+  const condition = ignorebaseTheme
+    ? specificityPrecedence.length - 1
+    : specificityPrecedence.length;
+  for (let index = 0; index < condition; index++) {
     if (
       exisiting[specificityPrecedence[index]] >
       upcoming[specificityPrecedence[index]]
@@ -118,21 +145,13 @@ const simplifyProps = (
     const propertySpecity = currentSpecificity
       ? { ...currentSpecificity }
       : {
-          [SPECIFICITY_100]: 0,
-          [SPECIFICITY_70]: 0,
-          [SPECIFICITY_60]: 0,
-          [SPECIFICITY_50]: 0,
-          [SPECIFICITY_55]: 0,
-          [SPECIFICITY_40]: 0,
-          [SPECIFICITY_30]: 0,
-          [SPECIFICITY_10]: 0,
+          ...INITIAL_PROP_SPECIFICITY,
           [SPECIFICITY_1]: priority,
         };
 
     if (
-      pseudoPropsMap[property] &&
-      (state[pseudoPropsMap[property]?.respondTo] ||
-        ['_dark', '_light', '_web', '_ios', '_android'].includes(property)) // array of state independent props
+      state[pseudoPropsMap[property]?.respondTo] ||
+      ['_dark', '_light', '_web', '_ios', '_android'].includes(property)
     ) {
       if (shouldResolvePseudoProp({ property, state, platform, colormode })) {
         propertySpecity[pseudoPropsMap[property].priority]++;
@@ -150,21 +169,33 @@ const simplifyProps = (
           priority
         );
       }
-    } else if (compareSpecificity(specificityMap[property], propertySpecity)) {
-      // STEP : update specificity
-
-      specificityMap[property] = propertySpecity;
+    } else if (state[pseudoPropsMap[property]?.respondTo] === undefined) {
       if (property.startsWith('_')) {
-        // merging internal props (like, _text, _checked, ...)
-        flattenProps[property] = merge(
-          {},
-          flattenProps[property],
-          props[property]
-        );
+        if (
+          compareSpecificity(specificityMap[property], propertySpecity, false)
+        ) {
+          specificityMap[property] = propertySpecity;
+          // merging internal props (like, _text, _checked, ...)
+          flattenProps[property] = merge(
+            {},
+            flattenProps[property],
+            props[property]
+          );
+        } else {
+          flattenProps[property] = merge(
+            {},
+            props[property],
+            flattenProps[property]
+          );
+        }
       } else {
-        // replacing simple props (like, p, m, bg, color, ...)
-
-        flattenProps[property] = props[property];
+        if (
+          compareSpecificity(specificityMap[property], propertySpecity, false)
+        ) {
+          specificityMap[property] = propertySpecity;
+          // replacing simple props (like, p, m, bg, color, ...)
+          flattenProps[property] = props[property];
+        }
       }
     }
   }
@@ -197,6 +228,5 @@ export const propsFlattener = (
     specificityMap,
     priority
   );
-
   return [flattenProps, specificityMap];
 };
