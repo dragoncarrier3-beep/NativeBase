@@ -1,25 +1,11 @@
-import { getStyleAndFilteredProps, propConfig } from '../theme/styled-system';
+import { getStyleAndFilteredProps } from '../theme/styled-system';
 import { useTheme } from './useTheme';
 import React from 'react';
 import { useNativeBaseConfig } from '../core/NativeBaseContext';
 import { useResponsiveQuery } from '../utils/useResponsiveQuery';
+import { getStyledSystemPropsAndRestProps } from '../utils/getStyledSystemPropsAndRestProps';
 //@ts-ignore
 import stableHash from 'stable-hash';
-
-const getStyledSystemPropsAndRestProps = (props: any) => {
-  const styledSystemProps: any = {};
-  const restProps: any = {};
-
-  for (let key in props) {
-    if (key in propConfig) {
-      styledSystemProps[key] = props[key];
-    } else {
-      restProps[key] = props[key];
-    }
-  }
-
-  return { styledSystemProps, restProps };
-};
 
 export const useStyledSystemPropsResolver = ({
   style: propStyle,
