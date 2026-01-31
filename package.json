@@ -21,7 +21,7 @@
     "example": "yarn --cwd example",
     "pods": "cd example && pod-install --quiet",
     "bootstrap": "yarn example && yarn && yarn pods",
-    "build:web": "rollup --config",
+    "build:web": "node init && rollup --config",
     "bundle:analysis": "visualize-bundle",
     "commit-test": "yarn prepare && cd example && yarn test && cd .."
   },
